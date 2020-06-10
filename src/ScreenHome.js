@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import {Link} from 'react-router-dom';
 import {Input,Button} from 'antd';
 
 function ScreenHome() {
@@ -16,7 +17,7 @@ function ScreenHome() {
                   <Input.Password className="Login-input" placeholder="password" />
             
 
-            <Button href="" style={{width:'80px'}} type="primary">Sign-in</Button>
+            <Link to='/screensource'><Button href="" style={{width:'80px'}} type="primary">Sign-in</Button></Link>
 
           </div>
 
@@ -29,7 +30,7 @@ function ScreenHome() {
                   <Input.Password className="Login-input" placeholder="password" />
             
 
-            <Button href="" style={{width:'80px'}} type="primary">Sign-up</Button>
+                  <Link to='/screensource'><Button href="" style={{width:'80px'}} type="primary">Sign-up</Button></Link>
 
           </div>
 
