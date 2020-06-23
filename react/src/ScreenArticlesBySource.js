@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Card, Icon, Modal} from 'antd';
 import Nav from './Nav'
+import { connect } from 'react-redux';
 
 const { Meta } = Card;
 
@@ -18,7 +19,6 @@ function ScreenArticlesBySource(props) {
       const response = await fetch(`https://newsapi.org/v2/top-headlines?sources=${props.match.params.id}&apiKey=0c20d84a67dc4594ab651a1cdc7dca09`);
       const jsonResponse = await response.json();
       setArticleList(jsonResponse.articles);
-      console.log(jsonResponse.articles);
     }
     fetchData()
   },[])
@@ -45,7 +45,7 @@ function ScreenArticlesBySource(props) {
 
         {articleList.map((article, i) => (
 
-          <div  style={{display:'flex',justifyContent:'center'}} key={i}>
+          <div style={{display:'flex',justifyContent:'center'}} key={i}>
           <Card
             style={{ 
             width: 300, 
@@ -60,8 +60,8 @@ function ScreenArticlesBySource(props) {
             />
             }
             actions={[
-                <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title,article.content)}/>,
-                <Icon type="like" key="ellipsis"/>
+                <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title,article.content)} />,
+                <Icon type="like" key="ellipsis" onClick={() => props.addToWishList(article)} />
             ]}
             >
             <Meta
@@ -86,4 +86,17 @@ function ScreenArticlesBySource(props) {
   );
 }
 
-export default ScreenArticlesBySource;
+function mapDispatchToProps(dispatch) {
+  return {
+    addToWishList: function(article) { 
+        dispatch( {type: 'addArticle',
+          articleLiked: article
+      } ) 
+    }
+  }
+}
+
+export default connect(
+    null, 
+    mapDispatchToProps
+)(ScreenArticlesBySource);

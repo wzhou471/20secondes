@@ -6,16 +6,24 @@ import ScreenSource from './ScreenSource';
 import ScreenArticlesBySource from './ScreenArticlesBySource';
 import ScreenMyArticles from './ScreenMyArticles';
 
+import {Provider} from 'react-redux';
+import {createStore, combineReducers}  from 'redux';
+import wishList from './reducers/articles';
+
+const store = createStore(combineReducers({wishList}))
+
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact component={ScreenHome} />
-        <Route path="/screensource" exact component={ScreenSource} />
-        <Route path="/screenarticlesbysource/:id" exact component={ScreenArticlesBySource} />
-        <Route path="/screenmyarticles" exact component={ScreenMyArticles} />
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={ScreenHome} />
+          <Route path="/screensource" exact component={ScreenSource} />
+          <Route path="/screenarticlesbysource/:id" exact component={ScreenArticlesBySource} />
+          <Route path="/screenmyarticles" exact component={ScreenMyArticles} />
+        </Switch>
+      </Router>
+    </Provider>
   );
 }
 
